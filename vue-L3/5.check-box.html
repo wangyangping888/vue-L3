@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			.check-box {
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAkUExURUdwTJqampmZmZmZmZubm5ubm6KiopeXl5mZmZmZmaKiopmZmVmXLrgAAAALdFJOUwBD8KiAagslwtYWexMYygAAAOVJREFUKM9jYICAUotJms3hDMiAy3M3GExZgBBjc9qtHFiWLmq0WyUBLii02xDCEN6tCBNj2d0IY0rsdoBqtt6KMCl6M8QA5k0CCEFGbQMw7a2O7JCiLWC53QLIghBu0lYUJzNEq4F0N6AKcgD1c2kLoAoyblrAwLKZAQ1YOzBwbkQXlJ7AUK2ALsi0nSHaAF2QeSuDdQC6IOtmhm4BdEHGHQyzC9AF2XcyaCegC7Jtwi6IVTtWi7A6CavjsXoTa4BgDTqsgYw1OrBHHNYoxpoYsCcbrAkMa1LEnmixJ2+sGQE9ywAARBBNCX4Tud8AAAAASUVORK5CYII=);
+				background-size: 20px 20px;
+			}
+			
+			.checked {
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAANlBMVEUAAADpPD3tO0HrPD7qPD7qOz7qPD3pOz7qPD3qPD3pPD7rPD/pQkLzRkbqQEDpPUH/VVXpOz3Rbw31AAAAEXRSTlMA6iuA81DZ07+rpXIjFgw7CVCvuuwAAADZSURBVDjLjdVbrsMgDATQoThAeYTO/jd7fy6ioU7wfCXKEY4lMLimlpyCSEi5VNym+civRN9UdnrhEvHnrzsclbhjdZ438Rf2efM27w9mptOkUndT/eAm/x2dbgfdOQsbijfZQ2lzwf2S8eHf+ugzAvXBvdDHc0V5ci83XgqyyTEjmRwTgskxQEyOAjE5yix9dHfvGGYzfXzUHBPysozumFG4SNWxoC4t6I4ViFepuzi22ZSqo183rutdc9LMR8F+uOzH1T4A9iPFPqTsY88+SO2j2T7szdfHHy1xS+1j0wOxAAAAAElFTkSuQmCC);
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="app">
+			<!--
+				:val="agree"  @my-event="selectHandler"  变成 v-model
+			-->
+
+			<check-box v-model="hobby" value="钓鱼"  ></check-box>钓鱼
+			<check-box v-model="hobby" value="跑步" ></check-box>跑步
+			<check-box v-model="hobby" value="看书" ></check-box>看书
+			<check-box v-model="hobby" value="看电影" ></check-box>看电影
+
+			<div>
+				<label> <input type="checkbox" v-model="hobby" value="钓鱼" />钓鱼 </label>
+				<label> <input type="checkbox" v-model="hobby" value="跑步" />跑步 </label>
+				<label> <input type="checkbox" v-model="hobby" value="看书" />看书 </label>
+				<label> <input type="checkbox" v-model="hobby" value="看电影" />看电影 </label>
+			</div>
+			<p>{{hobby}}</p>
+		</div>
+
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript">
+			Vue.component("check-box", {
+
+				template: "<div class='check-box' :class='{checked:flag}' @click='select' ></div>",
+				data: function() {
+					return {
+						arr: [],
+						flag: false
+					}
+				},
+				model:{
+					prop:"val",
+					event:'input'
+				},
+				props: {
+					val: {
+						type: Array,
+						default: function() {
+							return [];
+						},
+						required: true
+					},
+					value: {
+						default: ''
+					}
+				},
+				methods: {
+					select: function() {
+						this.flag = !this.flag;
+						if(this.flag){
+							this.arr.push(this.value);
+						}else{
+							var that = this;
+							var index = 0;
+							this.arr.forEach(function(item,inx){
+								if(item==that.value){
+									index = inx;
+								}
+							});
+							this.arr.splice(index,1);
+						}
+						
+						this.$emit('input',this.arr);
+					}
+				},
+				watch: {
+					val: function(val) {
+						this.arr = val;
+						var that = this;
+						var a = false;
+						this.arr.forEach(function(item, index) {
+							if(item == that.value) {
+								a = true;
+							}
+						});
+						this.flag = a;
+					}
+				},
+				created: function() {
+					this.arr = this.val;
+					var that = this;
+					this.arr.forEach(function(item, index) {
+						if(item == that.value) {
+							that.flag = true;
+						}
+					});
+				}
+
+			});
+
+			var app = new Vue({
+				el: "#app",
+				data: {
+					agree: false,
+					hobby: []
+				},
+				methods: {
+					select:function(val){
+						this.hobby = val;
+					}
+				},
+				watch: {},
+				computed: {},
+				components: {}
+			});
+		</script>
+	</body>
+
+</html>

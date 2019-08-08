@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			
+		</style>
+	</head>
+
+	<body>
+
+		<div id="app">
+
+			<rate-star v-model='score'></rate-star>
+			<p v-text="score"></p>
+		</div>
+
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript">
+			Vue.component("rate-star", {
+
+				template: "<div></div>",
+				data: function() {
+					return {}
+				},
+				props: {},
+				methods: {},
+				watch: {},
+				created: function() {}
+
+			});
+
+			var app = new Vue({
+				el: "#app",
+				data: {
+					score:1
+				},
+				methods: {},
+				watch: {},
+				computed: {},
+				components: {}
+			});
+		</script>
+	</body>
+
+</html>

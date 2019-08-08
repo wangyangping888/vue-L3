@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			.check-box {
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAkUExURUdwTJqampmZmZmZmZubm5ubm6KiopeXl5mZmZmZmaKiopmZmVmXLrgAAAALdFJOUwBD8KiAagslwtYWexMYygAAAOVJREFUKM9jYICAUotJms3hDMiAy3M3GExZgBBjc9qtHFiWLmq0WyUBLii02xDCEN6tCBNj2d0IY0rsdoBqtt6KMCl6M8QA5k0CCEFGbQMw7a2O7JCiLWC53QLIghBu0lYUJzNEq4F0N6AKcgD1c2kLoAoyblrAwLKZAQ1YOzBwbkQXlJ7AUK2ALsi0nSHaAF2QeSuDdQC6IOtmhm4BdEHGHQyzC9AF2XcyaCegC7Jtwi6IVTtWi7A6CavjsXoTa4BgDTqsgYw1OrBHHNYoxpoYsCcbrAkMa1LEnmixJ2+sGQE9ywAARBBNCX4Tud8AAAAASUVORK5CYII=);
+				background-size: 20px 20px;
+			}
+			
+			.checked {
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAANlBMVEUAAADpPD3tO0HrPD7qPD7qOz7qPD3pOz7qPD3qPD3pPD7rPD/pQkLzRkbqQEDpPUH/VVXpOz3Rbw31AAAAEXRSTlMA6iuA81DZ07+rpXIjFgw7CVCvuuwAAADZSURBVDjLjdVbrsMgDATQoThAeYTO/jd7fy6ioU7wfCXKEY4lMLimlpyCSEi5VNym+civRN9UdnrhEvHnrzsclbhjdZ438Rf2efM27w9mptOkUndT/eAm/x2dbgfdOQsbijfZQ2lzwf2S8eHf+ugzAvXBvdDHc0V5ci83XgqyyTEjmRwTgskxQEyOAjE5yix9dHfvGGYzfXzUHBPysozumFG4SNWxoC4t6I4ViFepuzi22ZSqo183rutdc9LMR8F+uOzH1T4A9iPFPqTsY88+SO2j2T7szdfHHy1xS+1j0wOxAAAAAElFTkSuQmCC);
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="app">
+			<!--
+				:val="agree"  @my-event="selectHandler"  变成 v-model
+			-->
+			<check-box v-model="agree"></check-box> 同意注册协议
+
+			<p> <input type="checkbox" v-model="agree" /> 同意注册协议 </p>
+
+			<p>{{agree}}</p>
+		</div>
+
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript">
+			Vue.component("check-box", {
+
+				template: "<div class='check-box' :class='{checked:flag}' @click='select' ></div>",
+				data: function() {
+					return {
+						flag: false
+					}
+				},
+				props: {
+					value: {
+						type: Boolean,
+						default: false,
+						required: true
+					}
+				},
+				methods: {
+					select: function() {
+						this.flag = !this.flag;
+						// 自定义事件
+						this.$emit('input', this.flag);
+					}
+				},
+				watch: {
+					value: function(val) {
+						this.flag = val;
+					}
+				},
+				created: function() {
+					this.flag = this.val;
+				}
+
+			});
+
+			var app = new Vue({
+				el: "#app",
+				data: {
+					agree: false
+				},
+				methods: {},
+				watch: {},
+				computed: {},
+				components: {}
+			});
+		</script>
+	</body>
+
+</html>

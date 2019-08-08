@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			.wrap {
+				position: relative;
+				z-index: 9999;
+			}
+			
+			.wrap .mask {
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				background-color: rgba(0, 0, 0, 0.4);
+			}
+			
+			.wrap .dialog {
+				width: 300px;
+				position: fixed;
+				top: 100px;
+				left: 50%;
+				margin-left: -150px;
+				background-color: #fff;
+				z-index: 999;
+				padding: 15px;
+			}
+			
+			.dialog h1 {
+				margin: 0;
+				font-size: 20px;
+				text-align: center;
+				line-height: 1.5em;
+			}
+			
+			.dialog .footer {
+				text-align: center;
+			}
+			
+			.dialog .footer button {
+				width: 45%;
+				line-height: 1.5em;
+				font-size: 16px;
+				text-align: center;
+			}
+			
+			.dialog .close {
+				font-size: 24px;
+				position: absolute;
+				top: 15px;
+				right: 15px;
+				cursor: pointer;
+			}
+			
+			.bounce-enter-active{
+				-webkit-animation: bounce 0.5s linear;
+			}
+			.bounce-leave-active{
+				-webkit-animation: bounce 0.5s linear reverse;
+			}
+			
+			@-webkit-keyframes bounce{
+				from{
+					-webkit-transform: scale(0);
+				}
+				50%{
+					-webkit-transform: scale(1.5);
+				}
+				to{
+					-webkit-transform: scale(1);
+				}
+			}
+			
+			
+		</style>
+	</head>
+
+	<body>
+
+		<div id="app">
+			
+			<dialog-div v-model="open" title='登录' >
+				
+				<form >
+					
+					<label for="user">用户名</label>
+					<input type="text" name="user" id="user" value="" />
+				</form>
+				
+			</dialog-div>
+			
+			<h1 v-text="open"></h1>
+			
+			<button  @click="open=true;">登录</button>
+			
+			
+
+		</div>
+
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript">
+			Vue.component("dialog-div", {
+				template: "<div class='wrap' >\
+							<transition name='bounce'>\
+							<div class='dialog' v-show='show'>\
+								<h1 v-text='title'></h1>\
+								<span class='close' @click='close'>&times;</span>\
+								<div class='main'><slot><slot/> </div>\
+								<div class='footer'>\
+									<button @click='close'>取消</button>\
+									<button @click='confirm'>确定</button>\
+								</div>\
+							</div>\
+							</transition>\
+							<div class='mask' v-show='show' @click='close'></div>\
+						</div>",
+				data: function() {
+					return {
+						show:true,
+					}
+				},
+				props:{
+					value:{
+						type:Boolean,
+						default:false
+					},
+					title:{
+						type:String,
+						default:''
+					}
+				},
+				watch:{
+					value:function(val){
+						this.show = val;
+					}
+				},
+				methods: {
+					close:function(){
+						this.show = false;
+						this.$emit('input',false);
+					},
+					confirm:function(){
+						this.$emit('confirm');
+					}
+				},
+				created:function(){
+					this.show = this.value;
+					
+				}
+			});
+
+			var app = new Vue({
+				el: "#app",
+				data: {
+					open: false
+				},
+				methods: {},
+				watch: {},
+				computed: {},
+				components: {}
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			.check-box {
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAkUExURUdwTJqampmZmZmZmZubm5ubm6KiopeXl5mZmZmZmaKiopmZmVmXLrgAAAALdFJOUwBD8KiAagslwtYWexMYygAAAOVJREFUKM9jYICAUotJms3hDMiAy3M3GExZgBBjc9qtHFiWLmq0WyUBLii02xDCEN6tCBNj2d0IY0rsdoBqtt6KMCl6M8QA5k0CCEFGbQMw7a2O7JCiLWC53QLIghBu0lYUJzNEq4F0N6AKcgD1c2kLoAoyblrAwLKZAQ1YOzBwbkQXlJ7AUK2ALsi0nSHaAF2QeSuDdQC6IOtmhm4BdEHGHQyzC9AF2XcyaCegC7Jtwi6IVTtWi7A6CavjsXoTa4BgDTqsgYw1OrBHHNYoxpoYsCcbrAkMa1LEnmixJ2+sGQE9ywAARBBNCX4Tud8AAAAASUVORK5CYII=);
+				background-size: 20px 20px;
+			}
+			
+			.checked {
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAANlBMVEUAAADpPD3tO0HrPD7qPD7qOz7qPD3pOz7qPD3qPD3pPD7rPD/pQkLzRkbqQEDpPUH/VVXpOz3Rbw31AAAAEXRSTlMA6iuA81DZ07+rpXIjFgw7CVCvuuwAAADZSURBVDjLjdVbrsMgDATQoThAeYTO/jd7fy6ioU7wfCXKEY4lMLimlpyCSEi5VNym+civRN9UdnrhEvHnrzsclbhjdZ438Rf2efM27w9mptOkUndT/eAm/x2dbgfdOQsbijfZQ2lzwf2S8eHf+ugzAvXBvdDHc0V5ci83XgqyyTEjmRwTgskxQEyOAjE5yix9dHfvGGYzfXzUHBPysozumFG4SNWxoC4t6I4ViFepuzi22ZSqo183rutdc9LMR8F+uOzH1T4A9iPFPqTsY88+SO2j2T7szdfHHy1xS+1j0wOxAAAAAElFTkSuQmCC);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="app">
+			<check-box :val='agree' @input="selected"></check-box> 同意注册协议
+			<br />
+			<check-box v-model="agree"></check-box> 同意注册协议
+			<br />
+			<input type="checkbox" v-model="agree" /> 同意注册协议
+		</div>
+		<script src="js/vue.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			Vue.component('check-box', {
+				template:'<div class="check-box" :class="{checked:flag}" @click="change"></div>',
+				data:function () {
+					return {
+						flag:false,
+						selected:[]
+					}
+				},
+				model:{
+					prop:'val'
+				},
+				methods:{
+					change:function () {
+						this.flag = !this.flag;
+						this.$emit('input', this.flag)
+					}
+				},
+				props:{
+					val:{
+						type: Boolean,
+						default:false
+					}
+				},
+				watch:{
+					val:function (val) {
+						this.flag = val
+					}
+				},
+				created:function () {
+					this.val = this.flag
+				}
+				
+			})
+			
+			var app = new Vue({
+				el:'.app',
+				data:{
+					agree: false
+				},
+				methods:{
+					selected:function (val) {
+						this.agree = val
+					}
+				}
+			})
+			
+			
+			
+		</script>
+	</body>
+</html>

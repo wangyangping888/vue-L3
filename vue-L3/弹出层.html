@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <html>
+        <meta  charset="utf=8"/>
+        <title></title>
+        <link rel="stylesheet" href="css/animate.css">
+        <style type="text/css">
+        .over{
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(100,100, 100, 0.4);
+            z-index: -2;
+        }
+        .box{
+            width: 300px;
+            height: 230px;
+            background-color: #fff;
+            position: fixed;
+            top: 200px;
+            left: 50%;
+            margin-left: -150px;
+            position: relative;
+        }
+        
+        .message{
+            margin-top: 20px;
+        }
+        label{
+            display: inline-block;
+            width: 70px;
+            text-align: right;
+            height: 30px;
+        
+        }
+        input{
+            width: 210px;
+            display: inline-block;
+            height: 30px;
+            margin-bottom: 20px;
+
+        }
+        .btn{
+            margin-left:70px; 
+        }
+        button{
+            margin-left: 10px;
+            width: 80px;
+            height: 30px;
+        }
+        
+        .cha{
+            position: absolute;
+            top: 5px;
+            right: 5px;
+
+        }
+        .title{
+            text-align: center;
+            padding-top: 20px;
+        }
+        .bounce-enter-active{
+				-webkit-animation: bounce 0.5s linear;
+			}
+	    .bounce-leave-active{
+				-webkit-animation: bounce 0.5s linear reverse;
+			}
+			
+		@-webkit-keyframes bounce{
+				from{
+					-webkit-transform: scale(0);
+				}
+				50%{
+					-webkit-transform: scale(1.5);
+				}
+				to{
+					-webkit-transform: scale(1);
+				}
+			}
+
+        </style>
+    </html>
+    <body>
+        <div id="app">
+            <button class="denglu" @click="anniu" :disabled="open" >登录</button>
+            <box v-model="open"></box> 
+        </div>
+        
+        <script type="text/javascript" src="js/vue.js"></script>
+        <script type="text/javascript">
+            Vue.component("box",{
+                template:"<div class='wrap' >\
+                            <transition name='bounce'>\
+                                    <div class='box' v-show='show'>\
+                                        <span class='cha' @click='close'>X</span>\
+                                        <div class='title'>用户登录</div>\
+                                        <div class='message'>\
+                                            <label>用户名：</label>\
+                                            <input type='text'>\
+                                            <br/>\
+                                            <label>密码：</label>\
+                                            <input type='password'>\
+                                        </div>\
+                                        <div class='btn'>\
+                                            <button @click='confirm'>确认</button>\
+                                            <button @click='close'>取消</button>\
+                                        </div>\
+                                    </div>\
+                            </transition>\
+                            <div class='over' @click='close' v-show='show'></div>\
+                        </div>",
+                data: function() {
+					return {
+						show:true,
+					}
+                },
+                props:{
+					value:{
+						type:Boolean,
+						default:false
+					},
+				},
+				watch:{
+					value:function(val){
+						this.show = val;
+					}
+				},
+				methods: {
+					close:function(){
+						this.show = false;
+						this.$emit('input',false);
+					},
+					confirm:function(){
+						this.$emit('comfirm');
+					}
+				},
+				created:function(){
+					this.show = this.value;
+					
+				}
+            });
+            var app = new Vue({
+                el:"#app",
+                data:{
+                    open: false
+                },
+                methods:{
+                    anniu:function(){
+                        this.open = true;
+                    }
+                }
+
+            })
+        </script>
+    </body>
+</html>

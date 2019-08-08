@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+
+	<body>
+
+		<div id="app">
+			<layout>
+				<template v-slot:header>头部</template>
+				任何东西
+				<template v-slot:footer>尾部</template>
+			</layout>
+
+		</div>
+
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript">
+			Vue.component("layout", {
+				template: "<div class='container'>\
+							<header>\
+							 	<slot name='header'></slot>\
+							</header>\
+							<main>\
+								<slot></slot>\
+							</main>\
+							<footer>\
+								<slot name='footer'></slot>\
+							</footer>\
+						</div>"
+
+			});
+
+			var app = new Vue({
+				el: "#app",
+				data: {},
+				methods: {},
+				watch: {},
+				computed: {},
+				components: {}
+			});
+		</script>
+	</body>
+
+</html>

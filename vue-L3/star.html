@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8"/>
+    <title></title>
+    <style type="text/css">
+        .star{
+            font-size: 40px;
+        }
+        .orange{
+            color: orange;
+            
+        }
+    </style>
+</html>
+<body>
+    <div id="app">
+        <box v-model="star"></box>
+        {{star}}
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+        Vue.component("box",{
+            template:"<div class='contain'>\
+                        <span class='star' v-for='i in 5' @click='dianji(i)' @mouseover='move' @mouseout='out' :class='{orange:i<=tmp}'>★</span>\
+                    </div>",
+            data:
+                function(){
+                    return {
+                       tmp: 0
+                    }
+                
+            },
+            props:{
+                value:{
+                    type:Number,
+                    default:0
+                }
+            },
+            // watch:{
+            //     value:function(val){
+            //         this.tmp=val
+            //     }
+            // },
+            methods:{
+                dianji:function(e){
+                    this.tmp = e
+                    this.$emit("input",this.tmp)
+                } 
+            },
+            created:function(){
+                console.log(this.value)
+                this.tmp = this.value
+            }
+
+        })
+        var app = new Vue({
+            el:"#app",
+            data:{
+                star:1
+            },
+            methods:{
+
+            }
+        })   
+    </script>
+</body>

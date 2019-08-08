@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<h1>一个实例</h1>
+			<book-item name="《西游记》"></book-item> <author name="吴承恩"></author>
+			
+			<book-item name="《水浒传》"></book-item> <author name="施耐庵"></author>
+			
+			
+		</div>
+		
+		<div id="root">
+			<h1>另一个实例</h1>
+			<book-item name="《西游记》"></book-item> <author name="吴承恩"></author>
+			
+			<book-item name="《水浒传》"></book-item> <author name="施耐庵"></author>
+		</div>
+
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript">
+			
+			// 全局注册
+			Vue.component('book-item',{
+				template:'<div>{{name}}</div>',
+				data:function(){
+					return {};
+				},
+				props:['name'],
+				methods:{},
+				created:function(){},
+				watch:{},
+				computed:{}
+			});
+			
+			// 实例化 
+			var app = new Vue({
+				el: '#app',
+				data: {},
+				methods: {},
+				
+				// 局部注册
+				components:{
+					'author':{
+						template:"<div>{{name}}</div>",
+						data:function(){
+							return {};
+						},
+						props:['name']
+					}
+				}
+			});
+			
+			var root = new Vue({
+				el:"#root"
+			});
+		</script>
+	</body>
+
+</html>
