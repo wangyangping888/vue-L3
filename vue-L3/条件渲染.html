@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8"/>
+    <title>样式绑定</title>
+    <style>
+        
+    </style>
+</html>
+<body>
+    <div id="app">
+        <input type="number" v-model="score"/>
+        <h1>您的成绩是：<span v-text="score"></span></h1>
+        <p v-show="score>=90">优秀</p>
+        <p v-show="90>score&&score>=80">良好</p>
+        <p v-show="80>score&&score>=60">及格</p>
+        <p v-show="60>score">不及格</p>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+        var app = new Vue({
+            el:'#app',
+            data:{
+                score:0,
+
+            },
+        })
+    </script>
+</body>

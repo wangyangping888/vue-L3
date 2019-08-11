@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8" />
+<title></title>
+<style>
+
+</style>
+
+</html>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) in todo" v-bind:key="index">{{item}}</li>
+        </ul>
+        <ul>
+            <li v-for="(val,key) in obj" v-bind:key="key">{{val}}</li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+                todo: ["7:00起床", "8:00洗漱", "9:00看书"],
+                obj: {
+                    name: "小明",
+                    age: "12",
+                    sex: "boy",
+                }
+
+            },
+        })
+    </script>
+</body>

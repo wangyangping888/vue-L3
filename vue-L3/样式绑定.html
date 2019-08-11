@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8"/>
+    <title>样式绑定</title>
+    <style>
+        .box{
+            border: 1px red solid;
+            width: 300px;
+            height: 300px;
+        }
+        .red{
+            background-color: red;
+        }
+        .big{
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+</html>
+<body>
+    <div id="app">
+        <div class="box" v-bind:style="[isRed,isbig]"></div>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+        var app = new Vue({
+            el:'#app',
+            data:{
+                isRed:{
+                    backgroundColor:'blue',
+                },
+                isbig:{
+                    width:'200px',
+                    height:'200px',
+                },
+
+            },
+        })
+    </script>
+</body>

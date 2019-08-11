@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8"/>
+    <title></title>
+    <style>
+        .box{
+            width: 300px;
+            height: 300px;
+        }
+        .red{
+            
+            background-color: red;
+        }
+        .blue{
+            background-color: blue;
+        }
+    </style>
+</html>
+<body>
+    <div id="app">
+        <div class="box" v-bind:class="isRed" v-on:click="changebox"></div>
+    </div>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript">
+        var app = new Vue({
+            el:'#app',
+            data:{
+                isRed:"red",
+
+            },
+            methods:{
+                changebox:function(){
+                    if(this.isRed == "red"){
+                        this.isRed = "blue"
+                    }else{
+                        this.isRed = "red"
+                    }
+                },
+            },
+        })
+    </script>
+</body>
